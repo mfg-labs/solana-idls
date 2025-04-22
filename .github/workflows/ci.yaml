@@ -32,7 +32,7 @@ jobs:
       - name: Detect changed JSON files
         id: changed_files
         run: |
-          echo "CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^json_specs/.*\.json$' || true)" >> $GITHUB_ENV
+          echo "CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^idls/.*\.json$' || true)" >> $GITHUB_ENV
 
       - name: Generate SDKs and create PRs
         if: env.CHANGED_FILES != ''
