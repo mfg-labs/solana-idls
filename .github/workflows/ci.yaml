@@ -39,6 +39,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          gh auth setup-git
           for file in $CHANGED_FILES; do
             name=$(basename "$file" .json)
             repo_name="${name}-sdk"
@@ -46,7 +47,7 @@ jobs:
 
             echo "Processing $file for $repo_name"
 
-            git clone "https://github.com/mfg-labs/$repo_name.git"
+            gh repo clone mfg-labs/$repo_name
             cd "$repo_name"
 
             git checkout -b "$branch_name"
