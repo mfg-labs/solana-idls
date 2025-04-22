@@ -27,7 +27,7 @@ jobs:
           override: true
 
       - name: Install codegen tool
-        run: cargo install https://github.com/mfg-labs/idlgen
+        run: cargo install --git https://github.com/mfg-labs/idlgen
 
       - name: Detect changed JSON files
         id: changed_files
