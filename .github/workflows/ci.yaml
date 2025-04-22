@@ -37,7 +37,7 @@ jobs:
       - name: Generate SDKs and create PRs
         if: env.CHANGED_FILES != ''
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.PERSONAL_GH_TOKEN }}
         run: |
           gh auth setup-git
           for file in $CHANGED_FILES; do
@@ -47,15 +47,15 @@ jobs:
 
             echo "Processing $file for $repo_name"
 
-            gh repo clone mfg-labs/$repo_name
+            git clone "https://${GH_TOKEN}@github.com/mfg-labs/$repo_name.git"
             cd "$repo_name"
 
             git checkout -b "$branch_name"
 
             idlgen --filename ../"$file" --out .
 
-            git config user.name "github-actions"
-            git config user.email "github-actions@github.com"
+            git config user.name github-actions
+            git config user.email github-actions@github.com
             git add .
             git commit -m "chore: auto-generated SDK for $name"
             git push origin "$branch_name"
